@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>돌잔치 초대장</title>
+  <meta name="description" content="따뜻한 감성의 모바일 돌잔치 초대장" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f2eb;
+      --bg-2: #fffaf6;
+      --card: rgba(255,255,255,0.72);
+      --text: #5c493d;
+      --muted: #8d7566;
+      --line: rgba(145, 114, 92, 0.18);
+      --accent: #c78f6b;
+      --accent-soft: #edd3bf;
+      --shadow: 0 18px 40px rgba(111, 82, 62, 0.12);
+      --radius: 24px;
+      --max: 720px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.75), transparent 30%),
+        linear-gradient(180deg, #fbf6f1 0%, #f6eee7 42%, #f8f2eb 100%);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.7;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 16px 56px;
+    }
+
+    .floating-controls {
+      position: fixed;
+      right: 16px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .fab {
+      border: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #eee;
+      min-height: 76vh;
+      display: flex;
+      align-items: end;
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.06) 15%, rgba(67,38,19,0.22) 60%, rgba(67,38,19,0.52) 100%);
+      z-index: 1;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 28px 22px 28px;
+      color: #fff9f2;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.92;
+      margin-bottom: 12px;
+    }
+
+    .hero h1,
+    .section-title,
+    .message-title,
+    .count-title {
+      font-family: 'Gowun Batang', serif;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.25;
+    }
+
+    .hero .sub {
+      margin-top: 12px;
+      font-size: 15px;
+      opacity: 0.95;
+    }
+
+    .badge-row {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      font-size: 13px;
+    }
+
+    .card,
+    .slider-card,
+    .map-card,
+    .contact-card {
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.42);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      margin-top: 18px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .flower {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, #f4d9c5 65%, #e2b89c 100%);
+      opacity: 0.9;
+      box-shadow: inset 0 0 0 8px rgba(255,255,255,0.35);
+    }
+
+    .message-title {
+      font-size: 28px;
+      margin: 0 0 12px;
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 24px 18px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .section-sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .divider {
+      width: 64px;
+      height: 1px;
+      margin: 14px auto 18px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .slider-card {
+      overflow: hidden;
+      padding-bottom: 16px;
+    }
+
+    .slider {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 22px 22px 0 0;
+      background: #e8ddd4;
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.12));
+    }
+
+    .slider-caption {
+      padding: 14px 16px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .slider-buttons {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .nav-btn,
+    .action-btn,
+    .contact-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-btn:hover,
+    .action-btn:hover,
+    .contact-btn:hover,
+    .fab:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-btn {
+      width: 42px;
+      height: 42px;
+      background: #fff9f4;
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(111, 82, 62, 0.09);
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #dcc7b8;
+      transition: all 0.25s ease;
+    }
+
+    .dot.active {
+      width: 22px;
+      background: var(--accent);
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .info-item {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      align-items: start;
+      gap: 10px;
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .info-value {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .gallery-grid img {
+      border-radius: 18px;
+      aspect-ratio: 1 / 1.08;
+      box-shadow: 0 10px 24px rgba(111, 82, 62, 0.08);
+      cursor: pointer;
+    }
+
+    .count-card {
+      text-align: center;
+      padding: 24px 18px;
+    }
+
+    .count-title {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .count-date {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .count-boxes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .count-box {
+      padding: 14px 8px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+    }
+
+    .count-num {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .count-label {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .map-card,
+    .contact-card {
+      padding: 18px;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #f2e8df;
+      aspect-ratio: 16 / 10;
+      margin-top: 10px;
+    }
+
+    .map-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .action-row,
+    .contact-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .action-btn,
+    .contact-btn {
+      padding: 14px 16px;
+      font-size: 14px;
+      background: linear-gradient(180deg, #fff8f3, #f8eee6);
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(111, 82, 62, 0.08);
+    }
+
+    .action-btn.primary,
+    .contact-btn.primary {
+      background: linear-gradient(180deg, #d7a886, #c78f6b);
+      color: #fff;
+    }
+
+    .footer {
+      padding: 26px 12px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(37, 22, 12, 0.84);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 80;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: min(92vw, 760px);
+      max-height: 84vh;
+      border-radius: 22px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.28);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      .wrap { padding: 12px 12px 52px; }
+      .hero { min-height: 72vh; border-radius: 26px; }
+      .hero-content { padding: 22px 18px 22px; }
+      .info-item { grid-template-columns: 72px 1fr; }
+      .count-boxes { gap: 8px; }
+      .count-num { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" loop>
+    <source src="audio/bgm.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="floating-controls">
+    <button class="fab" id="musicToggle" aria-label="배경음악 재생">🎵</button>
+    <button class="fab" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="맨 위로">↑</button>
+  </div>
+
+  <main class="wrap">
+    <section class="hero reveal">
+      <img src="images/hero.jpg" alt="대표 사진" />
+      <div class="hero-content">
+        <div class="eyebrow">FIRST BIRTHDAY PARTY</div>
+        <h1>소중한 첫 번째 생일에<br />여러분을 초대합니다</h1>
+        <div class="sub">윤유담 · 2026년 6월 20일 토요일 오전 11시 30분</div>
+        <div class="badge-row">
+          <div class="badge">더블유페스타 일산점</div>
+          <div class="badge">따뜻한 마음으로 함께해 주세요</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro card reveal">
+      <div class="flower"></div>
+      <h2 class="message-title">초대합니다</h2>
+      <p>
+        사랑으로 채워진 지난 1년,<br />
+        작은 손과 웃음으로 저희 가족의 하루하루가 더욱 빛났습니다.<br />
+        그 소중한 첫 생일을 맞아 감사한 분들과 따뜻한 시간을 나누고 싶습니다.<br />
+        바쁘시더라도 함께 자리해 주셔서 첫걸음을 축복해 주세요.
+      </p>
+    </section>
+
+    <section class="section slider-card reveal">
+      <h3 class="section-title">우리 아이의 반짝이는 순간</h3>
+      <p class="section-sub">유담이의 1년간의 과정</p>
+      <div class="divider"></div>
+
+      <div class="slider" id="photoSlider">
+        <div class="slides">
+          <div class="slide"><img src="images/slide1.jpg" alt="슬라이드 사진 1" /></div>
+          <div class="slide"><img src="images/slide2.jpg" alt="슬라이드 사진 2" /></div>
+          <div class="slide"><img src="images/slide3.jpg" alt="슬라이드 사진 3" /></div>
+          <div class="slide"><img src="images/slide4.jpg" alt="슬라이드 사진 4" /></div>
+        </div>
+      </div>
+
+      <div class="slider-caption">사랑받으며 자란 순간들을 함께 나눕니다</div>
+
+      <div class="slider-buttons">
+        <button class="nav-btn" id="prevBtn" aria-label="이전 사진">←</button>
+        <button class="nav-btn" id="nextBtn" aria-label="다음 사진">→</button>
+      </div>
+
+      <div class="dots" id="dots"></div>
+    </section>
+
+    <section class="section card reveal">
+      <h3 class="section-title">행사 안내</h3>
+      <p class="section-sub">오시는 걸음이 편하실 수 있도록 준비했습니다</p>
+      <div class="divider"></div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">일시</div>
+          <div class="info-value">2026년 6월 20일 토요일 오전 11시 30분</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">장소</div>
+          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층(더블유페스타 일산점) </div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">아이 이름</div>
+          <div class="info-value">윤유담</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">마음 전할 분</div>
+          <div class="info-value">아빠 윤호진 · 엄마 김혜민</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section count-card card reveal">
+      <h3 class="count-title">첫 생일까지</h3>
+      <div class="count-date" id="partyDateText">2026.06.20</div>
+      <div class="count-boxes">
+        <div class="count-box">
+          <div class="count-num" id="days">0</div>
+          <div class="count-label">DAYS</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="hours">0</div>
+          <div class="count-label">HOURS</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="minutes">0</div>
+          <div class="count-label">MIN</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="seconds">0</div>
+          <div class="count-label">SEC</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section card reveal">
+      <h3 class="section-title">갤러리</h3>
+      <p class="section-sub">터치하면 크게 볼 수 있습니다</p>
+      <div class="divider"></div>
+
+      <div class="gallery-grid" id="gallery">
+        <img src="images/gallery1.jpg" alt="갤러리 사진 1" />
+        <img src="images/gallery2.jpg" alt="갤러리 사진 2" />
+        <img src="images/gallery3.jpg" alt="갤러리 사진 3" />
+        <img src="images/gallery4.jpg" alt="갤러리 사진 4" />
+        <img src="images/gallery5.jpg" alt="갤러리 사진 5" />
+        <img src="images/gallery6.jpg" alt="갤러리 사진 6" />
+      </div>
+    </section>
+
+    <section class="section map-card reveal">
+      <h3 class="section-title">오시는 길</h3>
+      <div class="divider"></div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">주소</div>
+          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">주차</div>
+          <div class="info-value">건물 내 주차 가능</div>
+        </div>
+      </div>
+
+      <div class="map-frame">
+        <iframe
+          title="행사장 지도"
+          src="https://maps.google.com/maps?q=Seoul%20City%20Hall&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+      <div class="action-row">
+        <a class="action-btn primary" href="https://map.kakao.com/" target="_blank" rel="noreferrer">카카오맵 열기</a>
+        <a class="action-btn" href="https://map.naver.com/" target="_blank" rel="noreferrer">네이버지도 열기</a>
+      </div>
+    </section>
+
+    <section class="section contact-card reveal">
+      <h3 class="section-title">연락하기</h3>
+      <p class="section-sub">전화번호는 실제 번호로 변경해 주세요</p>
+      <div class="divider"></div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">아빠</div>
+          <div class="info-value">010-7195-4498</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">엄마</div>
+          <div class="info-value">010-7336-0896</div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <a class="contact-btn primary" href="tel:01012345678">아빠에게 전화</a>
+        <a class="contact-btn" href="tel:01023456789">엄마에게 전화</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      사랑으로 키운 첫 해, 함께해 주시는 마음을 오래 간직하겠습니다.
+    </footer>
+  </main>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose" aria-label="닫기">✕</button>
+    <img id="lightboxImg" src="" alt="확대 이미지" />
+  </div>
+
+  <script>
+    const partyDate = new Date('2026-05-16T12:00:00');
+
+    function pad(n) {
+      return String(n).padStart(2, '0');
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = Math.max(0, partyDate - now);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').textContent = pad(days);
+      document.getElementById('hours').textContent = pad(hours);
+      document.getElementById('minutes').textContent = pad(minutes);
+      document.getElementById('seconds').textContent = pad(seconds);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const slider = document.querySelector('.slides');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const total = slides.length;
+    let index = 0;
+    let autoPlay;
+
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `${i + 1}번 사진 보기`);
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsWrap.appendChild(dot);
+    }
+
+    function renderDots() {
+      [...dotsWrap.children].forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    function goToSlide(i) {
+      index = (i + total) % total;
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      renderDots();
+    }
+
+    function nextSlide() { goToSlide(index + 1); }
+    function prevSlide() { goToSlide(index - 1); }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      nextSlide();
+      restartAutoPlay();
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      prevSlide();
+      restartAutoPlay();
+    });
+
+    function startAutoPlay() {
+      autoPlay = setInterval(nextSlide, 3500);
+    }
+
+    function restartAutoPlay() {
+      clearInterval(autoPlay);
+      startAutoPlay();
+    }
+
+    startAutoPlay();
+
+    const audio = document.getElementById('bgm');
+    const musicToggle = document.getElementById('musicToggle');
+    let playing = false;
+
+    musicToggle.addEventListener('click', async () => {
+      try {
+        if (!playing) {
+          await audio.play();
+          playing = true;
+          musicToggle.textContent = '⏸';
+        } else {
+          audio.pause();
+          playing = false;
+          musicToggle.textContent = '🎵';
+        }
+      } catch (e) {
+        alert('모바일 환경에서는 화면을 한 번 터치한 뒤 음악 재생이 가능합니다.');
+      }
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.16 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('#gallery img').forEach((img) => {
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightbox.classList.add('open');
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  </script>
+</body>
+</html>
