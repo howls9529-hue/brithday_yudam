@@ -3,29 +3,545 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>돌잔치 초대장</title>
-  <meta name="description" content="따뜻한 감성의 모바일 돌잔치 초대장" />
+  <title>윤유담 첫돌에 초대합니다</title>
+  <meta name="description" content="사랑하는 유담이의 소중한 첫 생일에 여러분을 초대합니다" />
 
-  <!-- OG 메타태그 (카카오톡 썸네일용) -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="윤유담 첫돌에 초대합니다">
-  <meta property="og:description" content="사랑하는 유담이의 소중한 첫 생일에 여러분을 초대합니다">
-  <meta property="og:image" content="https://howls9529-hue.github.io/brithday_yudam/images/thumbnail.jpg">
-  <meta property="og:url" content="https://howls9529-hue.github.io/brithday_yudam/">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="윤유담 첫돌에 초대합니다" />
+  <meta property="og:description" content="사랑하는 유담이의 소중한 첫 생일에 여러분을 초대합니다" />
+  <meta property="og:image" content="https://howls9529-hue.github.io/brithday_yudam/images/thumbnail.jpg" />
+  <meta property="og:url" content="https://howls9529-hue.github.io/brithday_yudam/" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <style>
+    :root {
+      --bg: #f8f2eb;
+      --card: rgba(255,255,255,0.74);
+      --text: #5c493d;
+      --muted: #7e685b;
+      --line: rgba(145, 114, 92, 0.16);
+      --accent: #c78f6b;
+      --shadow: 0 18px 40px rgba(111, 82, 62, 0.12);
+      --radius: 24px;
+      --max: 720px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      line-height: 1.7;
+      background:
+        linear-gradient(to bottom, rgba(93, 65, 45, 0.14), rgba(248, 242, 235, 0) 140px),
+        linear-gradient(180deg, #fbf6f1 0%, #f7eee7 45%, #f8f2eb 100%);
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 170px;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 12% 10%, rgba(93, 65, 45, 0.18), transparent 42%),
+        radial-gradient(ellipse at 85% 5%, rgba(120, 91, 69, 0.14), transparent 36%),
+        linear-gradient(180deg, rgba(83, 58, 40, 0.12), rgba(83, 58, 40, 0));
+      opacity: 0.95;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 16px 56px;
+    }
+
+    .floating-controls {
+      position: fixed;
+      right: 16px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .fab {
+      border: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 18px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .card,
+    .slider-card,
+    .map-card,
+    .contact-card {
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.42);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #eee;
+      min-height: 76vh;
+      display: flex;
+      align-items: end;
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.03) 16%, rgba(67,38,19,0.2) 56%, rgba(67,38,19,0.5) 100%);
+      z-index: 1;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 30px 22px 32px;
+      color: #fff9f2;
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.92;
+      margin-bottom: 14px;
+    }
+
+    .hero h1,
+    .section-title,
+    .message-title,
+    .count-title {
+      font-family: 'Gowun Batang', serif;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(31px, 6vw, 46px);
+      line-height: 1.4;
+    }
+
+    .hero .sub {
+      margin-top: 14px;
+      font-size: 15px;
+      opacity: 0.96;
+    }
+
+    .badge-row {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(8px);
+      font-size: 13px;
+    }
+
+    .intro {
+      margin-top: 18px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .message-title {
+      font-size: 29px;
+      margin: 0 0 18px;
+    }
+
+    .invite-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.95;
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .section {
+      margin-top: 22px;
+      padding: 24px 18px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .section-sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .divider {
+      width: 64px;
+      height: 1px;
+      margin: 14px auto 18px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .slider-card {
+      overflow: hidden;
+      padding-bottom: 16px;
+    }
+
+    .slider {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 22px 22px 0 0;
+      background: #e8ddd4;
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.12));
+    }
+
+    .slider-caption {
+      padding: 14px 16px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .slider-buttons {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .nav-btn,
+    .action-btn,
+    .contact-btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-btn:hover,
+    .action-btn:hover,
+    .contact-btn:hover,
+    .fab:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-btn {
+      width: 42px;
+      height: 42px;
+      background: #fff9f4;
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(111, 82, 62, 0.09);
+    }
+
+    .dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #dcc7b8;
+      transition: all 0.25s ease;
+    }
+
+    .dot.active {
+      width: 22px;
+      background: var(--accent);
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .info-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid var(--line);
+      min-height: 58px;
+    }
+
+    .info-label {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100%;
+    }
+
+    .info-value {
+      color: var(--text);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .gallery-grid img {
+      border-radius: 18px;
+      aspect-ratio: 1 / 1.08;
+      box-shadow: 0 10px 24px rgba(111, 82, 62, 0.08);
+      cursor: pointer;
+    }
+
+    .count-card {
+      text-align: center;
+      padding: 24px 18px;
+    }
+
+    .count-title {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .count-date {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .count-boxes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .count-box {
+      padding: 14px 8px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+    }
+
+    .count-num {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .count-label {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .map-card,
+    .contact-card {
+      padding: 18px;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #f2e8df;
+      aspect-ratio: 16 / 10;
+      margin-top: 10px;
+    }
+
+    .map-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .action-row,
+    .contact-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .action-btn,
+    .contact-btn {
+      text-align: center;
+      padding: 14px 16px;
+      font-size: 14px;
+      background: linear-gradient(180deg, #fff8f3, #f8eee6);
+      color: var(--text);
+      box-shadow: 0 8px 20px rgba(111, 82, 62, 0.08);
+    }
+
+    .action-btn.primary,
+    .contact-btn.primary {
+      background: linear-gradient(180deg, #d7a886, #c78f6b);
+      color: #fff;
+    }
+
+    .footer {
+      padding: 26px 12px 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(37, 22, 12, 0.84);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 80;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: min(92vw, 760px);
+      max-height: 84vh;
+      border-radius: 22px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.28);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      border: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      .wrap { padding: 12px 12px 52px; }
+      .hero { min-height: 72vh; border-radius: 26px; }
+      .hero-content { padding: 22px 18px 22px; }
+      .hero h1 { font-size: 30px; }
+      .invite-text { font-size: 15px; line-height: 1.9; }
+      .info-item {
+        grid-template-columns: 72px 1fr;
+        min-height: 56px;
+      }
+      .info-label,
+      .info-value {
+        font-size: 13px;
+      }
+      .count-boxes { gap: 8px; }
+      .count-num { font-size: 20px; }
+    }
+  </style>
+</head>
 <body>
   <audio id="bgm" loop>
     <source src="audio/bgm.mp3" type="audio/mpeg" />
   </audio>
 
   <div class="floating-controls">
-    <button class="fab" id="musicToggle" aria-label="배경음악 재생">🎵</button>
     <button class="fab" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="맨 위로">↑</button>
   </div>
 
@@ -34,7 +550,11 @@
       <img src="images/hero.jpg" alt="대표 사진" />
       <div class="hero-content">
         <div class="eyebrow">FIRST BIRTHDAY PARTY</div>
-        <h1>소중한 첫 번째 생일에<br />여러분을 초대합니다</h1>
+        <h1>
+          사랑하는 유담이의<br />
+          소중한 첫 생일에<br />
+          여러분을 초대합니다
+        </h1>
         <div class="sub">윤유담 · 2026년 6월 20일 토요일 오전 11시 30분</div>
         <div class="badge-row">
           <div class="badge">더블유페스타 일산점</div>
@@ -44,13 +564,19 @@
     </section>
 
     <section class="intro card reveal">
-      <div class="flower"></div>
       <h2 class="message-title">초대합니다</h2>
-      <p>
+      <p class="invite-text">
         사랑으로 채워진 지난 1년,<br />
-        작은 손과 웃음으로 저희 가족의 하루하루가 더욱 빛났습니다.<br />
-        그 소중한 첫 생일을 맞아 감사한 분들과 따뜻한 시간을 나누고 싶습니다.<br />
-        바쁘시더라도 함께 자리해 주셔서 첫걸음을 축복해 주세요.
+        작은 손과 밝은 웃음으로<br />
+        저희 가족의 하루하루가 더욱 따뜻하게 빛났습니다.<br /><br />
+
+        그 소중한 첫 생일을 맞아<br />
+        감사한 분들을 모시고<br />
+        뜻깊은 시간을 함께 나누고자 합니다.<br /><br />
+
+        바쁘시더라도 귀한 걸음 하시어<br />
+        아이의 첫걸음을 함께 축복해 주신다면<br />
+        더없는 기쁨이 될 것 같습니다.
       </p>
     </section>
 
@@ -90,7 +616,7 @@
         </div>
         <div class="info-item">
           <div class="info-label">장소</div>
-          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층(더블유페스타 일산점) </div>
+          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층(더블유페스타 일산점)</div>
         </div>
         <div class="info-item">
           <div class="info-label">아이 이름</div>
@@ -148,7 +674,7 @@
       <div class="info-grid">
         <div class="info-item">
           <div class="info-label">주소</div>
-          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층</div>
+          <div class="info-value">경기도 일산서구 일현로 97-11 1동, 지하 2층(더블유페스타 일산점)</div>
         </div>
         <div class="info-item">
           <div class="info-label">주차</div>
@@ -172,7 +698,6 @@
 
     <section class="section contact-card reveal">
       <h3 class="section-title">연락하기</h3>
-      <p class="section-sub">전화번호는 실제 번호로 변경해 주세요</p>
       <div class="divider"></div>
 
       <div class="info-grid">
@@ -279,35 +804,15 @@
     startAutoPlay();
 
     const audio = document.getElementById('bgm');
-    const musicToggle = document.getElementById('musicToggle');
     let playing = false;
-
-    async function toggleMusic() {
-      try {
-        if (!playing) {
-          await audio.play();
-          playing = true;
-          musicToggle.textContent = '⏸';
-        } else {
-          audio.pause();
-          playing = false;
-          musicToggle.textContent = '🎵';
-        }
-      } catch (e) {
-        alert('모바일 브라우저 정책상 링크를 열자마자 소리 있는 음악 자동재생은 제한될 수 있습니다. 화면을 한 번 터치하면 바로 재생됩니다.');
-      }
-    }
-
-    musicToggle.addEventListener('click', toggleMusic);
 
     async function tryStartMusic() {
       if (playing) return;
       try {
         await audio.play();
         playing = true;
-        musicToggle.textContent = '⏸';
       } catch (e) {
-        // 모바일 정책상 실패 가능
+        // 모바일 정책상 첫 사용자 동작 전에는 실패 가능
       }
     }
 
