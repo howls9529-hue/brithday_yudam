@@ -6,6 +6,7 @@
   <title>윤유담 첫돌에 초대합니다</title>
   <meta name="description" content="사랑하는 유담이의 소중한 첫 생일에 여러분을 초대합니다" />
 
+  <!-- 카카오톡 / SNS 썸네일 -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="윤유담 첫돌에 초대합니다" />
   <meta property="og:description" content="사랑하는 유담이의 소중한 첫 생일에 여러분을 초대합니다" />
@@ -355,6 +356,7 @@
       justify-content: center;
       text-align: center;
       min-height: 100%;
+      white-space: nowrap;
     }
 
     .info-value {
@@ -362,7 +364,11 @@
       font-size: 14px;
       display: flex;
       align-items: center;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      line-height: 1.55;
+      min-width: 0;
     }
 
     .gallery-grid {
@@ -523,14 +529,22 @@
       .hero-content { padding: 22px 18px 22px; }
       .hero h1 { font-size: 30px; }
       .invite-text { font-size: 15px; line-height: 1.9; }
+
       .info-item {
-        grid-template-columns: 72px 1fr;
+        grid-template-columns: 74px 1fr;
         min-height: 56px;
+        align-items: center;
       }
+
       .info-label,
       .info-value {
-        font-size: 13px;
+        font-size: 12px;
       }
+
+      .info-value {
+        line-height: 1.5;
+      }
+
       .count-boxes { gap: 8px; }
       .count-num { font-size: 20px; }
     }
