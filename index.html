@@ -553,6 +553,27 @@
   </style>
 </head>
 
+  <script>
+const bgm = document.getElementById('bgm');
+
+window.addEventListener('pagehide', () => {
+    bgm.pause();
+    bgm.currentTime = 0;
+});
+
+window.addEventListener('beforeunload', () => {
+    bgm.pause();
+    bgm.currentTime = 0;
+});
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        bgm.pause();
+        bgm.currentTime = 0;
+    }
+});
+</script>
+  
 <body>
   <audio id="bgm" loop>
     <source src="audio/bgm.mp3" type="audio/mpeg">
