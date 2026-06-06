@@ -178,8 +178,8 @@
     .typing-line:nth-child(2) { animation-delay: 1.35s; }
 
     .hero-date {
-      font-size: 13px;
-      line-height: 1.8;
+      font-size: 18px;
+      line-height: 1.9;
       font-weight: 500;
       text-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
@@ -478,7 +478,7 @@
     .countdown {
       background:
         linear-gradient(rgba(0,0,0,0.28), rgba(0,0,0,0.28)),
-        url("images/hero.jpg") center/cover;
+        url("images/hero_v2.jpg") center/cover;
       padding: 50px 18px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -573,7 +573,7 @@
     }
 
     @media (max-width: 390px) {
-      .hero-date { font-size: 11px; }
+      .hero-date { font-size: 16px; }
       .info-line,
       .location-line {
         font-size: 15px;
@@ -591,7 +591,7 @@
   <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <section class="hero">
-    <img class="hero-img" src="images/hero.jpg" alt="메인 사진">
+    <img class="hero-img" src="images/hero_v2.jpg" alt="메인 사진">
 
     <div class="summer-wrap" id="summerWrap"></div>
 
@@ -610,7 +610,9 @@
 
       <div class="hero-date">
         <span class="date-line no-wrap">2026년 6월 20일 토요일 오전 11시 30분</span>
-        <span class="date-line">더블유페스타 일산점</span>
+<span class="date-line" style="font-size:20px;font-weight:600;">
+  더블유페스타 일산점
+</span>
       </div>
     </div>
   </section>
@@ -628,7 +630,7 @@
     </div>
   </section>
 
-  <img class="photo-reveal" src="images/invitation.jpg" alt="초대 사진">
+  <img class="photo-reveal" src="images/invitation_v2.jpg" alt="초대 사진">
 
   <div class="parents reveal">
     아빠 <span>윤호진</span> 엄마 <span>김혜민</span>
