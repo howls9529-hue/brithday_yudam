@@ -85,19 +85,16 @@
     }
 
     .hero-slide {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transform: scale(1.04);
-      transition: opacity 1.6s ease, transform 5s ease;
-    }
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
 
-    .hero-slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
+.hero-slide.active {
+  opacity: 1;
+}
 
     .hero::after {
       content: "";
@@ -205,6 +202,25 @@
       animation-delay: 2.2s;
       text-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
+
+    .hero-top {
+  margin-top: 20px;
+}
+
+.hero-title {
+  margin-top: 18px;
+}
+
+.date-line {
+  display: block;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: lineUp 0.8s ease forwards;
+}
+
+.date-line:nth-child(1) { animation-delay: 2.2s; }
+.date-line:nth-child(2) { animation-delay: 2.8s; }
+.date-line:nth-child(3) { animation-delay: 3.4s; }
 
     .section {
       background: #fff;
@@ -576,7 +592,6 @@
     <source src="audio/bgm.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" id="musicBtn">🔈</button>
   <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <section class="hero">
@@ -589,21 +604,24 @@
     <div class="snow-wrap" id="snowWrap"></div>
 
     <div class="hero-text">
-      <div class="happy">
-        H A P P Y<br>
-        B I R T H D A Y
-      </div>
-
-      <div class="hero-title">
-        <span class="typing-line">유담이의</span>
-        <span class="typing-line">첫번째 생일</span>
-      </div>
-
-      <div class="hero-date">
-        2026년 6월 20일 토요일 오전 11시 30분<br>
-        더블유페스타 일산점
-      </div>
+  <div class="hero-top">
+    <div class="happy">
+      H A P P Y<br>
+      B I R T H D A Y
     </div>
+
+    <div class="hero-title">
+      <span class="typing-line">유담이의</span>
+      <span class="typing-line">첫번째 생일</span>
+    </div>
+  </div>
+
+  <div class="hero-date">
+    <span class="date-line">2026년 6월 20일 토요일</span>
+    <span class="date-line">오전 11시 30분</span>
+    <span class="date-line">더블유페스타 일산점</span>
+  </div>
+</div>
   </section>
 
   <section class="section">
@@ -767,29 +785,15 @@
     const partyDate = new Date('2026-06-20T11:30:00');
 
     const audio = document.getElementById('bgm');
-    const musicBtn = document.getElementById('musicBtn');
-    let playing = false;
 
-    async function startMusic() {
-      try {
-        await audio.play();
-        playing = true;
-        musicBtn.textContent = '🔊';
-      } catch (e) {}
-    }
+async function startMusic() {
+  try {
+    await audio.play();
+  } catch (e) {}
+}
 
-    musicBtn.addEventListener('click', async () => {
-      if (playing) {
-        audio.pause();
-        playing = false;
-        musicBtn.textContent = '🔈';
-      } else {
-        await startMusic();
-      }
-    });
-
-    document.addEventListener('click', startMusic, { once: true });
-    document.addEventListener('touchstart', startMusic, { once: true });
+document.addEventListener('click', startMusic, { once: true });
+document.addEventListener('touchstart', startMusic, { once: true });
 
     const slides = document.querySelectorAll('.hero-slide');
     let slideIndex = 0;
