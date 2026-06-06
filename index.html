@@ -69,18 +69,14 @@
       background: #eee;
     }
 
-    .hero-slide {
+    .hero-img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      opacity: 0;
+      opacity: 1;
       transform: none;
       transition: none;
-    }
-
-    .hero-slide.active {
-      opacity: 1;
     }
 
     .hero::after {
@@ -90,13 +86,13 @@
       background: linear-gradient(
         to bottom,
         rgba(0,0,0,0.05),
-        rgba(0,0,0,0.04) 45%,
+        rgba(0,0,0,0.03) 45%,
         rgba(0,0,0,0.42)
       );
       z-index: 2;
     }
 
-    .snow-wrap {
+    .summer-wrap {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -104,25 +100,28 @@
       overflow: hidden;
     }
 
-    .snow {
+    .summer-dot {
       position: absolute;
-      top: -20px;
-      width: 5px;
-      height: 5px;
+      top: -30px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.88);
-      animation: snowfall linear infinite;
-      opacity: 0.8;
+      background: rgba(255, 242, 180, 0.75);
+      box-shadow: 0 0 12px rgba(255, 229, 150, 0.55);
+      animation: summerFloat linear infinite;
+      opacity: 0.75;
     }
 
-    @keyframes snowfall {
+    @keyframes summerFloat {
       0% {
-        transform: translateY(-20px) translateX(0);
+        transform: translateY(-30px) translateX(0) scale(0.6);
         opacity: 0;
       }
-      15% { opacity: 0.9; }
+      15% {
+        opacity: 0.85;
+      }
       100% {
-        transform: translateY(110vh) translateX(35px);
+        transform: translateY(110vh) translateX(28px) scale(1.05);
         opacity: 0;
       }
     }
@@ -153,14 +152,8 @@
     }
 
     @keyframes happyFade {
-      0%, 100% {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      25%, 70% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0%, 100% { opacity: 0; transform: translateY(8px); }
+      25%, 70% { opacity: 1; transform: translateY(0); }
     }
 
     .hero-title {
@@ -173,7 +166,8 @@
       text-shadow: 0 2px 10px rgba(0,0,0,0.16);
     }
 
-    .typing-line {
+    .typing-line,
+    .date-line {
       display: block;
       opacity: 0;
       transform: translateY(18px);
@@ -184,28 +178,22 @@
     .typing-line:nth-child(2) { animation-delay: 1.35s; }
 
     .hero-date {
-      font-size: 15px;
+      font-size: 13px;
       line-height: 1.8;
       font-weight: 500;
       text-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
 
-    .date-line {
-      display: block;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: lineUp 0.8s ease forwards;
+    .date-line:nth-child(1) { animation-delay: 2.2s; }
+    .date-line:nth-child(2) { animation-delay: 2.9s; }
+
+    .no-wrap {
+      white-space: nowrap;
+      letter-spacing: -0.4px;
     }
 
-    .date-line:nth-child(1) { animation-delay: 2.2s; }
-    .date-line:nth-child(2) { animation-delay: 2.8s; }
-    .date-line:nth-child(3) { animation-delay: 3.4s; }
-
     @keyframes lineUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .section {
@@ -451,24 +439,16 @@
       text-align: center;
     }
 
-    .info-box {
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-      padding: 20px 0;
-      line-height: 2;
-      font-size: 15px;
+    .info-line {
+      font-size: 17px;
+      line-height: 2.2;
+      color: #111;
     }
 
     .calendar {
       padding: 66px 28px 72px;
       background: #fff;
       text-align: center;
-    }
-
-    .calendar-date {
-      color: #666;
-      font-size: 18px;
-      margin-bottom: 36px;
     }
 
     .calendar-grid {
@@ -525,15 +505,15 @@
       margin-top: 8px;
     }
 
-    .location-text {
-      font-size: 16px;
-      line-height: 1.9;
-      margin-bottom: 28px;
+    .location-line {
+      font-size: 17px;
+      line-height: 2.1;
+      color: #111;
     }
 
     .call-btn {
       display: inline-block;
-      margin-top: 4px;
+      margin-top: 18px;
       padding: 9px 28px;
       border: 1px solid #8e7c6c;
       border-radius: 6px;
@@ -591,17 +571,15 @@
       font-size: 16px;
       margin-bottom: 12px;
     }
-    .no-wrap {
-  white-space: nowrap;
-  font-size: 14px;
-}
 
-@media (max-width: 390px) {
-  .no-wrap {
-    font-size: 12px;
-    letter-spacing: -0.5px;
-  }
-}
+    @media (max-width: 390px) {
+      .hero-date { font-size: 11px; }
+      .info-line,
+      .location-line {
+        font-size: 15px;
+        letter-spacing: -0.5px;
+      }
+    }
   </style>
 </head>
 
@@ -613,13 +591,9 @@
   <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <section class="hero">
-    <img class="hero-slide active" src="images/hero.jpg" alt="">
-    <img class="hero-slide" src="images/slide1.jpg" alt="">
-    <img class="hero-slide" src="images/slide2.jpg" alt="">
-    <img class="hero-slide" src="images/slide3.jpg" alt="">
-    <img class="hero-slide" src="images/slide4.jpg" alt="">
+    <img class="hero-img" src="images/hero.jpg" alt="메인 사진">
 
-    <div class="snow-wrap" id="snowWrap"></div>
+    <div class="summer-wrap" id="summerWrap"></div>
 
     <div class="hero-text">
       <div class="hero-top">
@@ -635,9 +609,9 @@
       </div>
 
       <div class="hero-date">
-  <span class="date-line no-wrap">2026년 6월 20일 토요일 오전 11시 30분</span>
-  <span class="date-line">더블유페스타 일산점</span>
-</div>
+        <span class="date-line no-wrap">2026년 6월 20일 토요일 오전 11시 30분</span>
+        <span class="date-line">더블유페스타 일산점</span>
+      </div>
     </div>
   </section>
 
@@ -731,15 +705,14 @@
     <div class="line-group">
       <span class="line-reveal label">BIRTHDAY DATE</span>
       <span class="line-reveal title">행사 안내</span>
-      <span class="line-reveal info-box">2026년 6월 20일 토요일 오전 11시 30분</span>
-      <span class="line-reveal info-box no-wrap">경기도 일산서구 일현로 97-11 1동, 지하 2층</span>
-<span class="line-reveal info-box">더블유페스타 일산점</span>
+      <span class="line-reveal info-line">2026년 6월 20일 토요일 오전 11시 30분</span>
+      <span class="line-reveal info-line no-wrap">경기도 일산서구 일현로 97-11 1동, 지하 2층</span>
+      <span class="line-reveal info-line">더블유페스타 일산점</span>
     </div>
   </section>
 
   <section class="calendar">
     <div class="label reveal">BIRTHDAY DATE</div>
-    <div class="calendar-date reveal">2026년 6월 20일 토요일 오전 11시 30분</div>
 
     <div class="calendar-grid reveal">
       <div class="day-name">일</div><div class="day-name">월</div><div class="day-name">화</div><div class="day-name">수</div><div class="day-name">목</div><div class="day-name">금</div><div class="day-name">토</div>
@@ -762,8 +735,8 @@
     <div class="line-group">
       <span class="line-reveal label">LOCATION</span>
       <span class="line-reveal title">오시는 길</span>
-      <span class="line-reveal location-text no-wrap">경기도 일산서구 일현로 97-11 1동, 지하 2층</span>
-<span class="line-reveal location-text">더블유페스타 일산점</span>
+      <span class="line-reveal location-line no-wrap">경기도 일산서구 일현로 97-11 1동, 지하 2층</span>
+      <span class="line-reveal location-line">더블유페스타 일산점</span>
       <a class="line-reveal call-btn" href="tel:01071954498">안내 전화</a>
     </div>
   </section>
@@ -810,25 +783,16 @@
     document.addEventListener('click', startMusic, { once: true });
     document.addEventListener('touchstart', startMusic, { once: true });
 
-    const slides = document.querySelectorAll('.hero-slide');
-    let slideIndex = 0;
+    const summerWrap = document.getElementById('summerWrap');
 
-    setInterval(() => {
-      slides[slideIndex].classList.remove('active');
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add('active');
-    }, 3800);
-
-    const snowWrap = document.getElementById('snowWrap');
-
-    for (let i = 0; i < 38; i++) {
-      const snow = document.createElement('span');
-      snow.className = 'snow';
-      snow.style.left = Math.random() * 100 + '%';
-      snow.style.animationDuration = (8 + Math.random() * 10) + 's';
-      snow.style.animationDelay = Math.random() * 8 + 's';
-      snow.style.width = snow.style.height = (3 + Math.random() * 5) + 'px';
-      snowWrap.appendChild(snow);
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'summer-dot';
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.animationDuration = (9 + Math.random() * 12) + 's';
+      dot.style.animationDelay = Math.random() * 8 + 's';
+      dot.style.width = dot.style.height = (4 + Math.random() * 8) + 'px';
+      summerWrap.appendChild(dot);
     }
 
     function updateCountdown() {
