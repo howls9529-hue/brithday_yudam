@@ -753,13 +753,35 @@ document.addEventListener('visibilitychange', () => {
     const partyDate = new Date('2026-06-20T11:30:00');
     const audio = document.getElementById('bgm');
 
-    async function startMusic() {
-      try { await audio.play(); } catch (e) {}
-    }
+async function startMusic() {
+  try {
+    await audio.play();
+  } catch(e) {}
+}
 
-    document.addEventListener('click', startMusic, { once: true });
-    document.addEventListener('touchstart', startMusic, { once: true });
+function stopMusic() {
+  audio.pause();
+  audio.currentTime = 0;
+}
 
+document.addEventListener('click', startMusic, { once: true });
+document.addEventListener('touchstart', startMusic, { once: true });
+
+window.addEventListener('pagehide', stopMusic);
+window.addEventListener('beforeunload', stopMusic);
+window.addEventListener('unload', stopMusic);
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) stopMusic();
+});
+
+window.addEventListener('blur', stopMusic);
+
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', stopMusic);
+});
+
+    
     const summerWrap = document.getElementById('summerWrap');
     for (let i = 0; i < 30; i++) {
       const dot = document.createElement('span');
